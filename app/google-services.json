@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "310392057397",
+    "firebase_url": "https://achim-b4463.firebaseio.com",
+    "project_id": "achim-b4463",
+    "storage_bucket": "achim-b4463.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310392057397:android:d6794d2ed3869fde670b7c",
+        "android_client_info": {
+          "package_name": "com.realllydan.achim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310392057397-cl6vru7h7rbpmiu4ufilh7rnko4e73bo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.realllydan.achim",
+            "certificate_hash": "6a611e1457730fc624fda0414225b6cdf566b6ca"
+          }
+        },
+        {
+          "client_id": "310392057397-ssa7pesvvk12cndv6f285a100s6q0gk8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8oWvI9g7SQQuP0n7O_qi_g8mbw1V_wUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "310392057397-ssa7pesvvk12cndv6f285a100s6q0gk8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
