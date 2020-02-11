@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void navigateToMainActivity() {
-        Intent mainActivityIntent = new Intent(LoginActivity.this, LoginActivity.class);
+        Intent mainActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
         mainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(mainActivityIntent);
     }

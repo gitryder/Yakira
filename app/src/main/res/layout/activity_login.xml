@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:padding="8dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:text="@string/btn_nav_to_register"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />

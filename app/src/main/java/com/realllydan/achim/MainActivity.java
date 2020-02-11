@@ -1,36 +1,41 @@
 package com.realllydan.achim;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private DrawerLayout mDrawerLayout;
+    private Toolbar mToolbar;
+
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+        mDrawerLayout = findViewById(R.id.drawerLayout);
 
         setupToolbar();
+        setupNavigationDrawer();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart: called");
         if (mAuth != null) {
             if (mAuth.getCurrentUser() == null) {
                 navigateToLoginActivity();
@@ -48,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                Log.d(TAG, "onOptionsItemSelected: logout");
                 logoutUser();
             default:
                 break;
@@ -58,12 +62,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupToolbar() {
-        Log.d(TAG, "setupToolbar: called");
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(R.string.main_toolbar_title);
     }
 
+    private void setupNavigationDrawer() {
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                mToolbar,
+                R.string.nav_drawer_open,
+                R.string.nav_drawer_close
+        );
+
+        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_home:
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
     private void logoutUser() {
-        Log.d(TAG, "logoutUser: logged out");
         if (mAuth.getCurrentUser() != null) {
             mAuth.signOut();
         }
@@ -71,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void navigateToLoginActivity() {
-        Log.d(TAG, "navigateToLoginActivity: called");
         Intent loginActivityIntent = new Intent(MainActivity.this, LoginActivity.class);
         loginActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(loginActivityIntent);

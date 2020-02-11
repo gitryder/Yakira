@@ -27,4 +27,6 @@
 
     <!--    Main Activity Strings-->
     <string name="main_toolbar_title">Home</string>
+    <string name="nav_drawer_open">Navigation Drawer Open</string>
+    <string name="nav_drawer_close">Navigation Drawer Close</string>
 </resources>
