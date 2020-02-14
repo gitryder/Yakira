@@ -1,4 +1,4 @@
-package com.realllydan.achim;
+package com.realllydan.yakira;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.realllydan.achim;
+package com.realllydan.yakira;
 
 import org.junit.Test;
 

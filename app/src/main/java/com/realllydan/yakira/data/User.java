@@ -1,4 +1,4 @@
-package com.realllydan.achim.data;
+package com.realllydan.yakira.data;
 
 public class User {
     private String name, email, accountType;
