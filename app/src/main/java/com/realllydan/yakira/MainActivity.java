@@ -6,15 +6,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.realllydan.yakira.data.MemberListAdapter;
@@ -24,7 +21,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements MemberListAdapter.OnMemberClickListener {
 
-    private DrawerLayout mDrawerLayout;
     private CoordinatorLayout mCoordinatorLayout;
     private Toolbar mToolbar;
 
@@ -42,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements MemberListAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-        mDrawerLayout = findViewById(R.id.mainDrawerLayout);
         mCoordinatorLayout = findViewById(R.id.mainCoordinatorLayout);
 
         setupUi();
@@ -78,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements MemberListAdapter
 
     private void setupUi() {
         setupToolbar();
-        setupNavigationDrawer();
         setupRecyclerView();
     }
 
@@ -86,34 +80,6 @@ public class MainActivity extends AppCompatActivity implements MemberListAdapter
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(R.string.main_toolbar_title);
-    }
-
-    private void setupNavigationDrawer() {
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                mDrawerLayout,
-                mToolbar,
-                R.string.nav_drawer_open,
-                R.string.nav_drawer_close
-        );
-
-        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.nav_home:
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
     }
 
     private void setupRecyclerView() {
