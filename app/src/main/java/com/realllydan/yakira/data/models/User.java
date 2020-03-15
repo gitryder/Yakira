@@ -1,4 +1,4 @@
-package com.realllydan.yakira.data;
+package com.realllydan.yakira.data.models;
 
 public class User {
     private String name, email, accountType;

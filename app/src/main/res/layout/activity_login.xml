@@ -6,18 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/loginAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilLoginEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:boxBackgroundColor="@android:color/white"
         app:boxBackgroundMode="outline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/loginAppBar">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etLoginEmail"
@@ -68,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:padding="8dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:text="@string/btn_nav_to_register"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />

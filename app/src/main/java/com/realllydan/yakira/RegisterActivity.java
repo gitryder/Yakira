@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -18,12 +19,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.realllydan.yakira.data.User;
+import com.realllydan.yakira.data.models.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private MaterialButton btnRegister;
     private ProgressBar progressBar;
+    private Toolbar mToolbar;
     private TextInputLayout tilRegisterConfirmPassword, tilRegisterAccountType;
     private TextInputEditText etRegisterName, etRegisterEmail, etRegisterPassword, etRegisterConfirmPassword, etRegisterAccountType;
     private String name, email, password, confirmPassword, accountType;
@@ -60,6 +62,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setupToolbar() {
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(R.string.register_toolbar_title);
     }
 

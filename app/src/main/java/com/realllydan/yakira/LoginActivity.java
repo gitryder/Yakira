@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private MaterialButton btnLogin, btnRegister;
     private ProgressBar progressBar;
+    private Toolbar mToolbar;
     private TextInputEditText etLoginEmail, etLoginPassword;
 
     private String email, password;
@@ -55,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setupToolbar() {
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(R.string.login_toolbar_title);
     }
 
