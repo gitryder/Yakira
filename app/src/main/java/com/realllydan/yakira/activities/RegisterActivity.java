@@ -1,4 +1,4 @@
-package com.realllydan.yakira;
+package com.realllydan.yakira.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -19,6 +21,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.realllydan.yakira.Constants;
+import com.realllydan.yakira.R;
 import com.realllydan.yakira.data.models.User;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -31,14 +37,13 @@ public class RegisterActivity extends AppCompatActivity {
     private String name, email, password, confirmPassword, accountType;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDb;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
-        mDb = FirebaseDatabase.getInstance().getReference();
 
         tilRegisterConfirmPassword = findViewById(R.id.tilRegisterConfirmPassword);
         tilRegisterAccountType = findViewById(R.id.tilRegisterAccountType);
@@ -137,31 +142,34 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(loginActivityIntent);
     }
 
+    private void addUserDetailsToDatabase() {
+        User user = new User(name, email, accountType);
+
+        db.collection(Constants.FIRESTORE_COLLECTION_USERS).add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        hideProgressBar();
+                        makeToast(getString(R.string.msg_register_success));
+                        logoutUser();
+                    }
+                });
+    }
+
     private void registerUserWithValidatedDetails() {
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    User user = new User(name, email, accountType);
-
-                    mDb.child(getString(R.string.users_database_child)).child(name).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-
-                            hideProgressBar();
-                            if (task.isSuccessful()) {
-                                makeToast(getString(R.string.msg_register_success));
-                                logoutUser();
-                            } else {
-                                makeToast(getString(R.string.error_register_failure));
-                            }
-                        }
-                    });
-                } else {
-                    hideProgressBar();
-                    makeToast(task.getException().getMessage());
-                }
-            }
-        });
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        addUserDetailsToDatabase();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        hideProgressBar();
+                        makeToast(e.getMessage());
+                    }
+                });
     }
 }

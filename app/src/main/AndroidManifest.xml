@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.realllydan.yakira.RegisterActivity" android:parentActivityName="com.realllydan.yakira.LoginActivity"></activity>
-        <activity android:name="com.realllydan.yakira.LoginActivity" />
-        <activity android:name="com.realllydan.yakira.MainActivity">
+        <activity android:name="com.realllydan.yakira.activities.RegisterActivity" android:parentActivityName="com.realllydan.yakira.activities.LoginActivity"></activity>
+        <activity android:name="com.realllydan.yakira.activities.LoginActivity" />
+        <activity android:name="com.realllydan.yakira.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

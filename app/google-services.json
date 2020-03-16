@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "601489404364-0khsrsea9frvvbq99u58ojj5tqa89fe6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.realllydan.yakira",
+            "certificate_hash": "6a611e1457730fc624fda0414225b6cdf566b6ca"
+          }
+        },
+        {
           "client_id": "601489404364-1qukm2a8hgp48fn0qb6bre497sv4s4pd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

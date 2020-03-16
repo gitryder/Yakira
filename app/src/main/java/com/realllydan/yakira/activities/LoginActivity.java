@@ -1,4 +1,4 @@
-package com.realllydan.yakira;
+package com.realllydan.yakira.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.realllydan.yakira.R;
 
 public class LoginActivity extends AppCompatActivity {
 
