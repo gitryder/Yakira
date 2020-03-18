@@ -38,7 +38,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setMemberName(memberArrayList.get(position).getName());
         holder.setMemberType(memberArrayList.get(position).getType());
-        holder.setLastCall(memberArrayList.get(position).getLastCall(), memberArrayList.get(position).getLastCallMadeBy());
+        //holder.setLastCall(memberArrayList.get(position).getLastCall(), memberArrayList.get(position).getLastCallMadeBy());
     }
 
     @Override

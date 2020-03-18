@@ -57,7 +57,6 @@ public class HomeFragment extends Fragment implements
     private FloatingActionButton fabAddMember;
     private View view;
 
-    private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private HomeFragmentListener homeFragmentListener;
     private IMainActivity iMainActivity;
@@ -116,41 +115,12 @@ public class HomeFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        mAuth = FirebaseAuth.getInstance();
 
         iMainActivity.setToolbarTitle(R.string.home_fragment_title);
 
         setupUi();
 
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (mAuth != null) {
-            if (mAuth.getCurrentUser() == null) {
-                navigateToLoginActivity();
-            }
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        getActivity().getMenuInflater().inflate(R.menu.main, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_logout:
-                logoutUser();
-            default:
-                break;
-        }
-
-        return false;
     }
 
     private void setupUi() {
@@ -190,7 +160,7 @@ public class HomeFragment extends Fragment implements
 
                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                             Member member = documentSnapshot.toObject(Member.class);
-                            Log.e(TAG, "onEvent: MEMBER DOCUMENT: " + documentSnapshot.getId());
+                            member.setDocId(documentSnapshot.getId());
                             memberArrayList.add(member);
                         }
                         memberListAdapter.notifyDataSetChanged();
@@ -198,19 +168,6 @@ public class HomeFragment extends Fragment implements
                 });
 
 
-    }
-
-    private void logoutUser() {
-        if (mAuth.getCurrentUser() != null) {
-            mAuth.signOut();
-        }
-        navigateToLoginActivity();
-    }
-
-    private void navigateToLoginActivity() {
-        Intent loginActivityIntent = new Intent(getActivity(), LoginActivity.class);
-        loginActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(loginActivityIntent);
     }
 
     private boolean isPhoneCallPermissionGranted() {
@@ -226,6 +183,10 @@ public class HomeFragment extends Fragment implements
     private void makePhoneCallToMember(String memberContactNumber) {
         String dial = "tel:" + memberContactNumber;
         startActivityForResult(new Intent(Intent.ACTION_CALL, Uri.parse(dial)), CALL_INTENT_REQUEST_CODE);
+    }
+
+    private void addCallRecordForCall() {
+
     }
 
     public interface HomeFragmentListener {

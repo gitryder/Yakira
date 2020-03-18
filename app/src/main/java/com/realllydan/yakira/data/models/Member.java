@@ -4,14 +4,10 @@ import com.google.firebase.firestore.Exclude;
 
 public class Member {
 
-    String docid, name, contact, type, lastCall, lastCallMadeBy;
+    private String docId;
+    private String name, contact, type;
 
     public Member() {
-    }
-
-    public Member(String name, String type) {
-        this.name = name;
-        this.type = type;
     }
 
     public Member(String name, String contact, String type) {
@@ -20,28 +16,13 @@ public class Member {
         this.type = type;
     }
 
-    public Member(String name, String contact, String type, String lastCall, String lastCallMadeBy) {
-        this.name = name;
-        this.contact = contact;
-        this.type = type;
-        this.lastCall = lastCall;
-        this.lastCallMadeBy = lastCallMadeBy;
-    }
-
-    public Member(String name, String type, String lastCall, String lastCallMadeBy) {
-        this.name = name;
-        this.type = type;
-        this.lastCall = lastCall;
-        this.lastCallMadeBy = lastCallMadeBy;
-    }
-
     @Exclude
-    public String getDocid() {
-        return docid;
+    public String getDocId() {
+        return docId;
     }
 
-    public void setDocid(String docid) {
-        this.docid = docid;
+    public void setDocId(String docId) {
+        this.docId = docId;
     }
 
     public String getName() {
@@ -66,21 +47,5 @@ public class Member {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getLastCall() {
-        return lastCall;
-    }
-
-    public void setLastCall(String lastCall) {
-        this.lastCall = lastCall;
-    }
-
-    public String getLastCallMadeBy() {
-        return lastCallMadeBy;
-    }
-
-    public void setLastCallMadeBy(String lastCallMadeBy) {
-        this.lastCallMadeBy = lastCallMadeBy;
     }
 }
