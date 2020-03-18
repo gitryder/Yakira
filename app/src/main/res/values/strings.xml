@@ -35,4 +35,14 @@
 
 <!--    Add Member Fragment Strings-->
     <string name="field_empty_error_message">Please fill all fields</string>
+    <string name="contact_null_error_message">Error: Member contact not available</string>
+    <string name="permission_granted_acknowledgement">Permission Granted. You may proceed to call now</string>
+    <string name="permission_denied_acknowledgement">Permission Denied. You cannot make calls :(</string>
+    <string name="permission_denied_action_ok">Okay</string>
+    <string name="confirm_call_team_title">Call Team Member?</string>
+    <string name="confirm_call_team_message">
+        You have clicked to call a team member. Do you want to proceed?
+    </string>
+    <string name="confirm_call_team_action_yes">Yes</string>
+    <string name="confirm_call_team_action_no">No</string>
 </resources>

@@ -29,8 +29,6 @@ import com.realllydan.yakira.data.models.Member;
 
 public class AddMemberFragment extends Fragment {
 
-    private static final String COLLECTION_MEMBER = "Members";
-
     private ProgressBar progressBar;
     private View view;
 
@@ -110,7 +108,7 @@ public class AddMemberFragment extends Fragment {
         if (member != null) {
             showProgressBar();
 
-            db.collection(Constants.FIRESTORE_COLLECTION_MEMBERS).add(member)
+            db.collection(Constants.Firestore.COLLECTION_MEMBERS).add(member)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {

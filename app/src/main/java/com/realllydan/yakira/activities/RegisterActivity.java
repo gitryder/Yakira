@@ -145,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void addUserDetailsToDatabase() {
         User user = new User(name, email, accountType);
 
-        db.collection(Constants.FIRESTORE_COLLECTION_USERS).add(user)
+        db.collection(Constants.Firestore.COLLECTION_USERS).add(user)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {

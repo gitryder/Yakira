@@ -1,6 +1,6 @@
 package com.realllydan.yakira.data.models;
 
-import com.google.firebase.database.Exclude;
+import com.google.firebase.firestore.Exclude;
 
 public class Member {
 
@@ -35,7 +35,7 @@ public class Member {
         this.lastCallMadeBy = lastCallMadeBy;
     }
 
-    @com.google.firebase.firestore.Exclude
+    @Exclude
     public String getDocid() {
         return docid;
     }
