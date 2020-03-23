@@ -20,12 +20,14 @@
     <string name="account_type_basic">1</string>
     <string name="error_unfilled_fields">Please fill all fields</string>
     <string name="error_unmatched_passwords">Passwords do not match</string>
-    <string name="error_invalid_account_type">0 for Admin, 1 for User</string>
+    <string name="error_invalid_account_type">0 for Admin, 1 for General</string>
     <string name="error_register_failure">Registration Failed</string>
     <string name="msg_register_success">Successfully Registered</string>
 
     <!--    Main Activity Strings-->
     <string name="home_fragment_title">Home</string>
+    <string name="greeting">Hi, <br></br> </string>
+
     <string name="add_member_fragment_title">Add Member</string>
     <string name="nav_drawer_open">Navigation Drawer Open</string>
     <string name="nav_drawer_close">Navigation Drawer Close</string>
@@ -45,4 +47,5 @@
     </string>
     <string name="confirm_call_team_action_yes">Yes</string>
     <string name="confirm_call_team_action_no">No</string>
+
 </resources>

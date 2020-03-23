@@ -1,13 +1,15 @@
 package com.realllydan.yakira.data.models;
 
-import com.google.firebase.firestore.Exclude;
+import com.google.firebase.database.Exclude;
 
 public class Member {
 
-    private String docId;
+    private String memberId;
     private String name, contact, type;
+    private CallRecord lastCall;
 
     public Member() {
+
     }
 
     public Member(String name, String contact, String type) {
@@ -17,12 +19,12 @@ public class Member {
     }
 
     @Exclude
-    public String getDocId() {
-        return docId;
+    public String getMemberId() {
+        return memberId;
     }
 
-    public void setDocId(String docId) {
-        this.docId = docId;
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
 
     public String getName() {
@@ -47,5 +49,13 @@ public class Member {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public CallRecord getLastCall() {
+        return lastCall;
+    }
+
+    public void setLastCall(CallRecord lastCall) {
+        this.lastCall = lastCall;
     }
 }

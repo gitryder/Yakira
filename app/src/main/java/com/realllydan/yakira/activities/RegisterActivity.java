@@ -21,10 +21,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.realllydan.yakira.Constants;
 import com.realllydan.yakira.R;
+import com.realllydan.yakira.Utils;
+import com.realllydan.yakira.Utils.Toaster;
 import com.realllydan.yakira.data.models.User;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -37,7 +37,8 @@ public class RegisterActivity extends AppCompatActivity {
     private String name, email, password, confirmPassword, accountType;
 
     private FirebaseAuth mAuth;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private Toaster toaster = new Toaster(this);
+    private DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         } else {
             hideProgressBar();
-            makeToast(getString(R.string.error_unfilled_fields));
+            toaster.displayAToast(R.string.error_unfilled_fields);
         }
     }
 
@@ -117,10 +118,6 @@ public class RegisterActivity extends AppCompatActivity {
         return (accountType.equals("0") || accountType.equals("1"));
     }
 
-    private void makeToast(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-    }
-
     private void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -142,18 +139,26 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(loginActivityIntent);
     }
 
-    private void addUserDetailsToDatabase() {
+    private void addUserDetailsToDatabase(String userId) {
         User user = new User(name, email, accountType);
 
-        db.collection(Constants.Firestore.COLLECTION_USERS).add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        hideProgressBar();
-                        makeToast(getString(R.string.msg_register_success));
-                        logoutUser();
-                    }
-                });
+        db.child(Constants.Firebase.USERS)
+                .child(userId)
+                .setValue(user)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if (task.isSuccessful()) {
+                    hideProgressBar();
+                    toaster.displayAToast(R.string.msg_register_success);
+                    logoutUser();
+                } else {
+                    toaster.displayAToast(R.string.error_register_failure);
+                }
+
+            }
+        });
     }
 
     private void registerUserWithValidatedDetails() {
@@ -161,14 +166,15 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        addUserDetailsToDatabase();
+                        String userId = authResult.getUser().getUid();
+                        addUserDetailsToDatabase(userId);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         hideProgressBar();
-                        makeToast(e.getMessage());
+                        toaster.displayAToast(e.getMessage());
                     }
                 });
     }

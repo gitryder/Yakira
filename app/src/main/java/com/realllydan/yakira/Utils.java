@@ -1,6 +1,8 @@
 package com.realllydan.yakira;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,4 +30,25 @@ public class Utils {
             return timeFormat.format(c.getTime());
         }
     }
+
+    public static class Toaster {
+        private Context context;
+
+        public Toaster(Context context) {
+            this.context = context;
+        }
+
+        public void displayAToast(int message) {
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        }
+
+        public void displayAToast(String message) {
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        }
+
+        public void displayAShortToast(int message) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

@@ -1,6 +1,10 @@
 package com.realllydan.yakira.data.models;
 
 public class User {
+
+    public static final String TYPE_ADMIN = "0";
+    public static final String TYPE_GENERAL = "1";
+
     private String name, email, accountType;
 
     public User() {

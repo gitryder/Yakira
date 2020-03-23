@@ -2,37 +2,41 @@ package com.realllydan.yakira.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.realllydan.yakira.Constants;
 import com.realllydan.yakira.IMainActivity;
 import com.realllydan.yakira.R;
+import com.realllydan.yakira.Utils.Toaster;
 import com.realllydan.yakira.data.models.Member;
+
+import java.util.ArrayList;
 
 public class AddMemberFragment extends Fragment {
 
     private ProgressBar progressBar;
     private View view;
+    private Context context;
 
     private IMainActivity iMainActivity;
+    private Toaster toaster;
+
+    //testing
+    private ArrayList<Member> allMembers = new ArrayList<>();
 
     public AddMemberFragment() {
 
@@ -41,13 +45,16 @@ public class AddMemberFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.context = context;
         iMainActivity = (IMainActivity) context;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.fragment_add_member, container, false);
+        view = inflater.inflate(R.layout.fragment_add_member, container, false);
         setupUi();
+
+        toaster = new Toaster(context);
 
         return view;
     }
@@ -101,29 +108,34 @@ public class AddMemberFragment extends Fragment {
         }
     }
 
+    private void addAllDataToTestingArrayList() {
+
+    }
+
     private void addMemberToDatabase() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         Member member = getDataFromFieldsAsMemberObject();
 
         if (member != null) {
             showProgressBar();
 
-            db.collection(Constants.Firestore.COLLECTION_MEMBERS).add(member)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            db.child(Constants.Firebase.MEMBERS)
+                    .push()
+                    .setValue(member)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            hideProgressBar();
+                        public void onComplete(@NonNull Task<Void> task) {
 
-                            iMainActivity.onFragmentBackPressed();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            hideProgressBar();
+                            if (task.isSuccessful()) {
+                                hideProgressBar();
 
-                            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-                            iMainActivity.onFragmentBackPressed();
+                                iMainActivity.onFragmentBackPressed();
+                            } else {
+                                hideProgressBar();
+
+                                toaster.displayAToast(task.getException().getMessage());
+                                iMainActivity.onFragmentBackPressed();
+                            }
                         }
                     });
         }

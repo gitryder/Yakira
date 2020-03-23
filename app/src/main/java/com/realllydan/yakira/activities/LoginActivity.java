@@ -16,6 +16,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.realllydan.yakira.Utils.Toaster;
 import com.realllydan.yakira.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -26,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText etLoginEmail, etLoginPassword;
 
     private String email, password;
+    private Toaster toaster = new Toaster(this);
     private FirebaseAuth mAuth;
 
     @Override
@@ -83,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             loginUserWithValidatedCredentials();
         } else {
             hideProgressBar();
-            makeToast(getString(R.string.error_unfilled_fields));
+            toaster.displayAToast(R.string.error_unfilled_fields);
         }
     }
 
@@ -97,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                     navigateToMainActivity();
                     finish();
                 } else {
-                    makeToast(task.getException().getMessage());
+                    toaster.displayAToast(task.getException().getMessage());
                 }
             }
         });
@@ -112,10 +114,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean areFieldsEmpty() {
         return (email.isEmpty() || password.isEmpty());
-    }
-
-    private void makeToast(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     private void bindFieldDataToStrings() {
